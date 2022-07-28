@@ -5,7 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/round.xml" value="0.1885" />
         <entry key="app/src/main/res/drawable/shadowbg.xml" value="0.102" />
-        <entry key="app/src/main/res/layout/activity_bluetooth.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_bluetooth.xml" value="0.11" />
         <entry key="app/src/main/res/layout/activity_btlist.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_listview.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/support_simple_spinner_dropdown_item.xml" value="0.1" />

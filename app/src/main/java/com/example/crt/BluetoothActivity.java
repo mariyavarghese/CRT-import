@@ -36,6 +36,6 @@ public class BluetoothActivity extends AppCompatActivity {
                 this,
                 R.layout.support_simple_spinner_dropdown_item,
                 devices);
-        l.setAdapter(arr);
+        k.setAdapter(arr);
     }
 }
