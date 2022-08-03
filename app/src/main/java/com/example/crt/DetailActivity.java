@@ -7,6 +7,7 @@ import android.view.Menu;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -18,6 +19,7 @@ import com.example.crt.databinding.ActivityDetailBinding;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private static final int REQUEST_ENABLE_BT = 1;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityDetailBinding binding;
 
@@ -28,7 +30,9 @@ public class DetailActivity extends AppCompatActivity {
         binding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-       setSupportActionBar(binding.appBarDetail.toolbar);
+        setSupportActionBar(binding.appBarDetail.toolbar);
+
+
         binding.appBarDetail.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

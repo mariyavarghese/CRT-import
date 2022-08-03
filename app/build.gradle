@@ -7,8 +7,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.crt"
-        minSdk 28
-        targetSdk 32
+        minSdk 23
+        targetSdk 14
         versionCode 1
         versionName "1.0"
 
