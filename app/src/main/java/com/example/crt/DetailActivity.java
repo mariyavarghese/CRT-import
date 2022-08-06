@@ -1,6 +1,7 @@
 package com.example.crt;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
@@ -22,6 +23,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 1;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityDetailBinding binding;
+    private ConnectedThread mConnectedThread; // bluetooth background worker thread to send and receive data
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,9 @@ public class DetailActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_detail);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+   //     mConnectedThread.write("[B@857ca29");
+
     }
 
     @Override

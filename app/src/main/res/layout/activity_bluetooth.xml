@@ -66,7 +66,7 @@
                 <ListView
                     android:id="@+id/list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_marginLeft="5dp"
                     android:divider="#fff"
 
@@ -105,7 +105,7 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:text="SCAN"
-                        android:onClick="scanbt"
+                        android:onClick="discover"
                         android:textAlignment="textEnd"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="12dp" />
@@ -131,7 +131,92 @@
                     android:dividerHeight="0dp"
                     android:padding="0dp" />
             </LinearLayout>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context="com.mcuhq.simplebluetooth.MainActivity">
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="RX:"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/read_buffer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="&lt;Read Buffer>" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Status:"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/bluetooth_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="&lt;Bluetooth Status>" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/scan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bluetooth ON" />
+
+
+                <Button
+                    android:id="@+id/paired_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Show paired Devices" />
+
+                <Button
+                    android:id="@+id/discover"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Discover New Devices" />
+
+                <ListView
+                    android:id="@+id/devices_list_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:choiceMode="singleChoice" />
+            </LinearLayout>
         </LinearLayout>
 </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
