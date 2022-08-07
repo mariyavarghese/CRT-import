@@ -58,6 +58,7 @@ public class ConnectedThread extends Thread {
                     mHandler.obtainMessage(BluetoothActivity.MESSAGE_READ, bytes, -1, buffer)
                             .sendToTarget(); // Send the obtained bytes to the UI activity
 
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();

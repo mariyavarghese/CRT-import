@@ -115,9 +115,10 @@ public class BluetoothActivity extends AppCompatActivity {
                 if(msg.what == CONNECTING_STATUS){
                     if(msg.arg1 == 1) {
                         mBluetoothStatus.setText("Connected to Device: " + msg.obj);
+                        mConnectedThread.cancel();
                         Intent intent = new Intent (BluetoothActivity.this, DetailActivity.class);
                        startActivity(intent);
-                       mConnectedThread.write("[B@857ca29");
+                    //   mConnectedThread.write("[B@857ca29");
                     }
                     else
                         mBluetoothStatus.setText("Connection Failed");
@@ -254,6 +255,8 @@ public class BluetoothActivity extends AppCompatActivity {
             }
             Log.d("int",position+" "+id);
             Log.d("address",devaddress.get(position));
+            singleToneClass singleToneClass = com.example.crt.singleToneClass.getInstance();
+            singleToneClass.setData(devaddress.get(position));
             mBluetoothStatus.setText("Connecting...");
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) view).getText().toString();

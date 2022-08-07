@@ -10,7 +10,6 @@ import android.view.Menu;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,7 +24,9 @@ public class DetailActivity extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 1;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityDetailBinding binding;
-    private ConnectedThread mConnectedThread; // bluetooth background worker thread to send and receive data
+   // private ConnectedThread maConnectedThread; // bluetooth background worker thread to send and receive data
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,12 @@ public class DetailActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_detail);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        singleToneClass singleToneClass = com.example.crt.singleToneClass.getInstance();
 
-   //     mConnectedThread.write("[B@857ca29");
+        Log.d("add",singleToneClass.getData());
+
+        
+    //    maConnectedThread.write("[B@857ca29");
 
     }
 

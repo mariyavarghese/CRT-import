@@ -34,4 +34,6 @@ public class SlideshowFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
 }
