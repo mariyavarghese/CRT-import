@@ -1,5 +1,7 @@
 package com.example.crt;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,6 +53,8 @@ public class DetailActivity extends AppCompatActivity {
                 .setOpenableLayout(drawer)
                 .build();
         getSupportActionBar().setTitle("Vehicle Details");
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_detail);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
