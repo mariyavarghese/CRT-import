@@ -53,6 +53,8 @@ public class ConnectedThread extends Thread {
                     bytes = mmInStream.read(buffer, 0, bytes); // record how many bytes we actually read
 
                     String respdata= TextUtil.toHexString(buffer);
+                  //  Log.d("resp",buffer);
+
                     Log.d("resp",respdata);
 
                     mHandler.obtainMessage(BluetoothActivity.MESSAGE_READ, bytes, -1, buffer)
@@ -69,9 +71,10 @@ public class ConnectedThread extends Thread {
     }
 
     /* Call this from the main activity to send data to the remote device */
-    public void write(String input) {
+    public void write(byte[] input) {
        // Log.d("read",input);
-        byte[] bytes ={70,77,66,88,-86,-86,-86,-86,0,46,0,2,0,1,14,-88,13,10};
+        byte[] bytes = input;
+                //{70,77,66,88,-86,-86,-86,-86,0,46,0,2,0,1,14,-88,13,10};
 
         //{70,77,66,88,-86,-86,-86,-86,0,30,0,2,0,0,-54,41,13,10};
                // {70,77,66,88,-86,-86,-86,-86,0,46,0,2,0,1,14,-88,13,10};
