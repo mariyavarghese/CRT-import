@@ -17,6 +17,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
             app:titleTextColor="@color/black"
+            app:theme="@style/ToolbarTheme"
+
 
 
 

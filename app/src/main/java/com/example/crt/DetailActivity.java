@@ -102,7 +102,7 @@ public class DetailActivity extends AppCompatActivity {
                     if(outhex.contains("C350")){
                         String ignition= outhex.substring(60,64);
                         ImageView igview = (ImageView)findViewById(R.id.ignition) ;
-                        Log.d("addtesig",ignition);
+
 
                         if(ignition.equals("0000")){
                             Log.d("addtesigout",outhex);
@@ -115,6 +115,16 @@ public class DetailActivity extends AppCompatActivity {
                         int decimal=Integer.parseInt(outhex.substring(170,174),16);
                         Log.d("addtesdes", String.valueOf(decimal));
 */
+                    }
+
+                    if(outhex.contains("C3AA")){
+
+                        String speed = outhex.substring(140,144);
+                        Log.d("addtesig",speed);
+                        int decimal=Integer.parseInt(speed,16);
+                        TextView speedview= (TextView) findViewById(R.id.speed);
+                        speedview.setText(String.valueOf(decimal));
+
                     }
 
                 }
