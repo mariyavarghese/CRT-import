@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -32,6 +33,7 @@ import com.example.crt.databinding.ActivityDetailBinding;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.util.Random;
 import java.util.UUID;
 
 public class DetailActivity extends AppCompatActivity {
@@ -41,6 +43,7 @@ public class DetailActivity extends AppCompatActivity {
     private final static int CONNECTING_STATUS = 3; // used in bluetooth handler to identify message status
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityDetailBinding binding;
+    private final static int CURRENT_PAGE= 1;
    // private ConnectedThread maConnectedThread; // bluetooth background worker thread to send and receive data
    private static final UUID BT_MODULE_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // "random" unique identifier
 
@@ -48,7 +51,7 @@ public class DetailActivity extends AppCompatActivity {
     private Handler mHandler; // Our main handler that will receive callback notifications
     private ConnectedThread mConnectedThread; // bluetooth background worker thread to send and receive data
     private BluetoothSocket mBTSocket = null; // bi-directional client-to-client data path
-
+    private DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,48 +87,110 @@ public class DetailActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         singleToneClass singleToneClass = com.example.crt.singleToneClass.getInstance();
+        dbHandler = new DBHandler(DetailActivity.this);
 
         Log.d("add",singleToneClass.getData());
         mHandler = new Handler(Looper.getMainLooper()){
             @Override
             public void handleMessage(Message msg){
-                if(msg.what == MESSAGE_READ){
+                if(msg.what == MESSAGE_READ) {
                     String readMessage = null;
                     try {
                         readMessage = new String((byte[]) msg.obj, "UTF-8");
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                 //   mReadBuffer.setText(readMessage);
-                    String outhex= TextUtil.toHexString((byte[]) msg.obj);
-                    outhex = outhex.replaceAll("\\s", "");
-                    if(outhex.contains("C350")){
-                        String ignition= outhex.substring(60,64);
-                        ImageView igview = (ImageView)findViewById(R.id.ignition) ;
+                    //   mReadBuffer.setText(readMessage);
+                    singleToneClass singleToneClass = com.example.crt.singleToneClass.getInstance();
+                    Log.d("frag",String.valueOf(singleToneClass.getFrag()));
+
+                    if(singleToneClass.getFrag()==1) {
+                     String outhex = TextUtil.toHexString((byte[]) msg.obj);
+                     outhex = outhex.replaceAll("\\s", "");
+                     if (outhex.contains("C350")) {
+                         String ignition = outhex.substring(60, 64);
+                         ImageView igview = (ImageView) findViewById(R.id.ignition);
 
 
-                        if(ignition.equals("0000")){
-                            Log.d("addtesigout",outhex);
-                           igview.setImageResource(R.drawable.ic_gcaronoff);
-                        }
-                        else{
-                            igview.setImageResource(R.drawable.ic_gcaron);
-                        }
+                         if (ignition.equals("0000")) {
+                             Log.d("addtesigout", outhex);
+                             igview.setImageResource(R.drawable.ic_gcaronoff);
+                         } else {
+                             igview.setImageResource(R.drawable.ic_gcaron);
+                         }
                     /*    Log.d("addtes", outhex.substring(170,174));
                         int decimal=Integer.parseInt(outhex.substring(170,174),16);
                         Log.d("addtesdes", String.valueOf(decimal));
 */
-                    }
+                     }
 
-                    if(outhex.contains("C3AA")){
+                     if (outhex.contains("C3AA")) {
+                         final int min = 20;
+                         final int max = 80;
+                         final int random = new Random().nextInt((max - min) + 1) + min;
+                         String speed = outhex.substring(140, 144);
+                         Log.d("addtesig", speed);
+                         int decimal = Integer.parseInt(speed, 16);
+                         TextView speedview = (TextView) findViewById(R.id.speed);
+                         speedview.setText(String.valueOf(random));
 
-                        String speed = outhex.substring(140,144);
-                        Log.d("addtesig",speed);
-                        int decimal=Integer.parseInt(speed,16);
-                        TextView speedview= (TextView) findViewById(R.id.speed);
-                        speedview.setText(String.valueOf(decimal));
+                     }
+                 }
+                    {
+                  //       mConnectedThread.write(bytes);
+                }
 
-                    }
+                    String ignition= "0";
+                    String total_mileage= "40";
+                    String vehicle_mileage= "45";
+                    String total_fuel_consumption= "50";
+                    String total_fuel_consumption_counted= "25";
+                    String fuel_level_percent= "60";
+                    String fuel_level_liters= "12";
+                    String engine_speed_RPM= "800";
+                    String engine_temperature= "37";
+                    String vehicle_speed= "600";
+                    String accelaration_pedal_position= "1";
+                    String cng_level_percent= "20";
+                    String total_cng_consumption= "56";
+                    String engine_is_working_on_cng= "1";
+                    String oil_pressure_level= "5";
+                    String front_left_door= "1";
+                    String front_right_door= "0";
+                    String rear_right_door= "0";
+                    String rear_left_door= "0";
+                    String trunk_cover= "1";
+                    String engine_cover_hood= "1";
+                    String latitude= "6.7777766";
+                    String longitude= "9.88888888";
+                    String company_id= "3";
+                    String user_id= "1";
+
+        dbHandler.addNewData(ignition,
+                total_mileage,
+                vehicle_mileage,
+                total_fuel_consumption,
+                total_fuel_consumption_counted,
+                fuel_level_percent,
+                fuel_level_liters,
+                engine_speed_RPM,
+                engine_temperature,
+                vehicle_speed,
+                accelaration_pedal_position,
+                cng_level_percent,
+                total_cng_consumption,
+                engine_is_working_on_cng,
+                oil_pressure_level,
+                front_left_door,
+                front_right_door,
+                rear_right_door,
+                rear_left_door,
+                trunk_cover,
+                engine_cover_hood,
+                latitude,
+                longitude,
+                company_id,
+                user_id);
 
                 }
 
@@ -139,12 +204,22 @@ public class DetailActivity extends AppCompatActivity {
 
                        // Byte sendm= {70,77,66,88,-86,-86,-86,-86,0,34,0,2,0,0,-49,121,13,10};
                         byte[] bytes ={70,77,66,88,-86,-86,-86,-86,0,34,0,2,0,0,-49,121,13,10};
+                            mConnectedThread.write(bytes);
 
-                        mConnectedThread.write(bytes);
+/*
+                            while(true){
+                                Log.d("loop","running");
+                            }
+*/
+
                     }
-                    else
-                        Log.d("addcone","Failed con");
+                    else {
+                        Log.d("addcone", "Failed con");
+                        Toast.makeText(DetailActivity.this, "Couldn't Connect", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent (DetailActivity.this, BluetoothActivity.class);
+                        startActivity(intent);
 
+                    }
                     //    mBluetoothStatus.setText("Connection Failed");
                 }
             }
@@ -197,7 +272,20 @@ public class DetailActivity extends AppCompatActivity {
             }
         }.start();
 
+        final Handler bhandler = new Handler();
+        final int delay = 5000; // 1000 milliseconds == 1 second
+
+        bhandler.postDelayed(new Runnable() {
+            public void run() {
+                System.out.println("myHandler: here!"); // Do your work here
+                byte[] bytes ={70,77,66,88,-86,-86,-86,-86,0,34,0,2,0,0,-49,121,13,10};
+                mConnectedThread.write(bytes);
+
+                bhandler.postDelayed(this, delay);
+            }
+        }, delay);
     //    maConnectedThread.write("[B@857ca29");
+
 
     }
 
