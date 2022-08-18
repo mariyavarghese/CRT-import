@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -35,6 +38,18 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.UUID;
+
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -284,6 +299,23 @@ public class DetailActivity extends AppCompatActivity {
                 bhandler.postDelayed(this, delay);
             }
         }, delay);
+
+        final Handler apihandler = new Handler();
+        final int apidelay = 5000; // 1000 milliseconds == 1 second
+
+        apihandler.postDelayed(new Runnable() {
+            public void run() {
+                System.out.println("api handler"); // Do your work here
+                byte[] bytes ={70,77,66,88,-86,-86,-86,-86,0,34,0,2,0,0,-49,121,13,10};
+                // postDataUsingVolley("nameEdt.getText().toString()", "jobEdt.getText().toString()");
+                try {
+                    postData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                bhandler.postDelayed(this, apidelay);
+            }
+        }, delay);
     //    maConnectedThread.write("[B@857ca29");
 
 
@@ -312,4 +344,144 @@ public class DetailActivity extends AppCompatActivity {
         }
         return  device.createRfcommSocketToServiceRecord(BT_MODULE_UUID);
     }
+/*
+
+    private void postDataUsingVolley(String name, String job) {
+        // url to post our data
+        String url = "https://reqres.in/api/users";
+
+        // creating a new variable for our request queue
+        RequestQueue queue = Volley.newRequestQueue(DetailActivity.this);
+
+        // on below line we are calling a string
+        // request method to post the data to our API
+        // in this we are calling a post method.
+        StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String apiresponse) {
+              Log.d("apiresoinded",apiresponse);
+                // on below line we are displaying a success toast message.
+                Toast.makeText(DetailActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
+                try {
+                    // on below line we are parsing the response
+                    // to json object to extract data from it.
+                    JSONObject respObj = new JSONObject(apiresponse);
+
+                    // below are the strings which we
+                    // extract from our json object.
+                    Log.d("apirses", String.valueOf(respObj));
+                    // on below line we are setting this string s to our text view.
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // method to handle errors.
+                Toast.makeText(DetailActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected JSONObject getParams() {
+                // below line we are creating a map for
+                // storing our values in key and value pair.
+                Map<String, String> params = new HashMap<String, String>();
+
+                // on below line we are passing our key
+                // and value pair to our parameters.
+                params.put("vehicle_details", "[{\"ignition\":\"0\",\"total_mileage\":\"40\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"3\",\"user_id\":\"1\"},{\"ignition\":\"1\",\"total_mileage\":\"30\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"3\",\"user_id\":\"1\"}] ");
+                String str = "[{\"No\":\"17\",\"Name\":\"Andrew\"},{\"No\":\"18\",\"Name\":\"Peter\"}, {\"No\":\"19\",\"Name\":\"Tom\"}]";
+                try {
+                    JSONArray parray = new JSONArray(str);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // at last we are
+                // returning our params.
+                System.out.println(params);
+              //  return params;
+                JSONObject student1 = new JSONObject();
+                try {
+                    student1.put("id", "3");
+                    student1.put("name", "NAME OF STUDENT");
+                    student1.put("year", "3rd");
+                    student1.put("curriculum", "Arts");
+                    student1.put("birthday", "5/5/1993");
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                JSONObject student2 = new JSONObject();
+                try {
+                    student2.put("id", "2");
+                    student2.put("name", "NAME OF STUDENT2");
+                    student2.put("year", "4rd");
+                    student2.put("curriculum", "scicence");
+                    student2.put("birthday", "5/5/1993");
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+
+                JSONArray jsonArray = new JSONArray();
+
+                jsonArray.put(student1);
+                jsonArray.put(student2);
+
+                JSONObject studentsObj = new JSONObject();
+                try {
+                    studentsObj.put("Students", jsonArray);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                String jsonStr = studentsObj.toString();
+
+                System.out.println("jsonString: "+jsonStr);
+                return studentsObj;
+            }
+        };
+        // below line is to make
+        // a json object request.
+        queue.add(request);
+    }
+*/
+public void postData() throws JSONException {
+    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+    dbHandler.getdata();
+    JSONObject object = new JSONObject("{\"vehicle_details\":[{\"ignition\":\"0\",\"total_mileage\":\"40\",\"vehicle_mileage\":\"20\",\"total_fuel_consumption\":\"5\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"4\",\"user_id\":\"2\"},{\"ignition\":\"1\",\"total_mileage\":\"30\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"4\",\"user_id\":\"1\"}] }");
+ //   object="[{\"ignition\":\"0\",\"total_mileage\":\"40\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"3\",\"user_id\":\"1\"},{\"ignition\":\"1\",\"total_mileage\":\"30\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"3\",\"user_id\":\"1\"}]"
+    //input your API parameters
+    //   object.put("parameter","value");
+    // object.put("parameter","value");
+
+    Log.d("postreq", String.valueOf(object));
+    // Enter the correct url for your api service site
+    String url = "https://ogesinfotech.com/crt_app/get_data.php?p=1";
+    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, object,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    System.out.println(response);
+                    System.out.println("response");
+
+                    //       resultTextView.setText("String Response : "+ response.toString());
+                }
+            }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+       //     resultTextView.setText("Error getting response");
+        }
+    });
+    requestQueue.add(jsonObjectRequest);
+}
+
+
 }

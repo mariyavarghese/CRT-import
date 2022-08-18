@@ -120,8 +120,9 @@ public class BluetoothActivity extends AppCompatActivity {
                        startActivity(intent);
                     //   mConnectedThread.write("[B@857ca29");
                     }
-                    else
-                        mBluetoothStatus.setText("Connection Failed");
+                    else{
+                        Toast.makeText(BluetoothActivity.this, "Couldn't Connect", Toast.LENGTH_SHORT).show();
+                        mBluetoothStatus.setText("Connection Failed");}
                 }
             }
         };

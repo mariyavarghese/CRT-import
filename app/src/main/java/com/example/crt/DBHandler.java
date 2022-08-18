@@ -2,8 +2,10 @@ package com.example.crt;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DBHandler extends SQLiteOpenHelper {
 
@@ -166,6 +168,16 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void getdata(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultSet = db.rawQuery("Select * from vehicle_details",null);
+        resultSet.moveToFirst();
+        Log.d("rest",resultSet.getString(5));
+
+
+
+    }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // this method is called to check if the table exists already.
