@@ -4,30 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:id="@+id/drawer_layout"
-    android:orientation="vertical"
-    tools:context=".UserLoginpage">
+    tools:context=".CompanyLogin">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/riple_green"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="20dp"
             >
         <RelativeLayout
-            android:layout_width="250dp"
+            android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_blue"
             android:layout_gravity="center"
             android:backgroundTint="@color/white"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="0dp"
+
             android:orientation="horizontal">
 
             <ImageView
@@ -42,46 +41,35 @@
 
 
 
-        </RelativeLayout>
 
+
+        </RelativeLayout>
+<LinearLayout
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="20dp">
 
             <ImageView
-
-                android:id="@+id/idlogout"
-                android:layout_width="40dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/ic_logout" />
-
-
+                android:id="@+id/img_reset_updates"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_settings"
+                android:gravity="right"
+                android:padding="8dp"
+                android:visibility="visible" />
+</LinearLayout>
         </LinearLayout>
-        <RelativeLayout
-            android:visibility="visible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
 
-            android:layout_marginTop="25dp">
-
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/round"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@color/white"
-
-                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                tools:ignore="MissingClass" />
-
-        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="270dp"
+            android:layout_height="350dp"
             android:layout_gravity="center"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="100dp"
             android:layout_marginEnd="30dp"
             android:background="@drawable/ripple_blue"
             android:backgroundTint="@color/white"
@@ -90,13 +78,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="80dp">
 
                 <TextView
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="User Login"
+                    android:text="Company Login"
                     android:textColor="@color/button_bg_red"
                     android:gravity="center"
                     android:textSize="20dp">
@@ -119,18 +107,17 @@
                     <EditText
                         android:layout_width="300dp"
                         android:layout_height="50dp"
-                        android:hint="Email"
+                        android:textSize="12dp"
+                        android:hint="Email ID"
                         android:paddingLeft="10dp"
                         android:textColorHint="@color/dark_grey_button_background_color"
                         android:gravity="left|center"
                         android:layout_gravity="center"
-                        android:id="@+id/edt_username"
-                        android:textSize="12dp"
+                        android:id="@+id/edt_email"
                         android:maxLines="1"
-                        android:textColor="@color/black"
                         android:inputType="textEmailAddress"
                         android:layout_marginTop="10dp"
-                        />
+                        android:textColor="@color/black"/>
                 </LinearLayout>
                 <RelativeLayout
                     android:layout_marginStart="10dp"
@@ -149,9 +136,9 @@
                         android:id="@+id/edt_password"
                         android:layout_width="300dp"
                         android:layout_height="50dp"
-                        android:textSize="12dp"
                         android:layout_gravity="center"
                         android:layout_marginStart="20dp"
+                        android:textSize="12dp"
                         android:layout_marginTop="10dp"
                         android:gravity="left|center"
                         android:hint="Password"
@@ -170,7 +157,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dp"
                         android:src="@drawable/password_show_eye" />
-
 
 
 
@@ -201,54 +187,10 @@
 
         </TextView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="OR"
-            android:textColor="@color/white"
-            android:layout_marginTop="10dp">
-
-        </TextView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="10dp">
 
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:text="Don't have an account?"
-
-                android:textColor="@color/white">
-
-            </TextView>
-
-            <Button
-                android:id="@+id/btn_registeruser"
-                android:layout_width="180dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Sign Up"
-                android:textAllCaps="false"
-                android:background="@drawable/grey"
-                android:textColor="@color/button_bg_red"
-                android:layout_marginTop="5dp">
-
-            </Button>
-
-
-        </LinearLayout>
     </LinearLayout>
 
 
 
 </LinearLayout>
-

@@ -5,562 +5,607 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:layout_marginTop="0dp"
-        android:foregroundGravity="center_vertical|center|center_horizontal"
-        android:orientation="vertical"
-        android:padding="5dp">
-
-        <ImageView
-            android:id="@+id/ignition"
-            android:layout_width="135dp"
-            android:layout_height="135dp"
-
-            android:layout_centerVertical="true"
-            android:layout_gravity="center|center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/round"
-            android:elevation="5dp"
-            android:foregroundGravity="center_vertical|center|center_horizontal"
-            android:padding="25dp"
-            app:srcCompat="@drawable/ic_gcaron" />
-
-        <RelativeLayout
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:padding="20dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_marginTop="0dp"
+            android:foregroundGravity="center_vertical|center|center_horizontal"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-            <LinearLayout
-                android:id="@+id/leftbx"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-android:gravity="center"
+            <ImageView
+                android:id="@+id/ignition"
+                android:layout_width="135dp"
+                android:layout_height="135dp"
 
-                android:background="@drawable/greenbg"
-                android:orientation="vertical">
+                android:layout_centerVertical="true"
+                android:layout_gravity="center|center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/round"
+                android:elevation="5dp"
+                android:foregroundGravity="center_vertical|center|center_horizontal"
+                android:padding="25dp"
+                android:contentDescription="on"
+                app:srcCompat="@drawable/ic_gcaron" />
 
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mileage"
-                    android:textColor="#FFFFFF"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proxima"
-                    android:text="20"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF"
-                    android:textFontWeight="700"
-                    android:textSize="34sp" />
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proxima"
-                    android:text="Km/L"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-
-                android:layout_toLeftOf="@+id/rightbx"
-                android:layout_toRightOf="@+id/leftbx"
-                android:background="@drawable/greenbg"
-
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proxima"
-                    android:text="Fuel Level"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:padding="20dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:id="@+id/leftbx"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:background="@drawable/greenbg"
+                    android:orientation="vertical">
+
 
                     <TextView
-                        android:id="@+id/textView7"
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mileage"
+                        android:textColor="#FFFFFF"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/textView4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/proxima"
-                        android:text="81"
+                        android:text=""
                         android:textAlignment="center"
                         android:textColor="#FFFFFF"
                         android:textFontWeight="700"
                         android:textSize="34sp" />
 
                     <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proxima"
+                        android:text="Km/L"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+
+                    android:layout_toLeftOf="@+id/rightbx"
+                    android:layout_toRightOf="@+id/leftbx"
+                    android:background="@drawable/greenbg"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proxima"
+                        android:text="Fuel Level"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF" />
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/proxima"
-                        android:paddingLeft="2dp"
-                        android:text="%"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
+                        android:orientation="horizontal">
 
-                        />
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/proxima"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textFontWeight="700"
+                            android:textSize="34sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/proxima"
+                            android:paddingLeft="2dp"
+                            android:text=""
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proxima"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF" />
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView8"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right"
+                    android:gravity="center"
+
+                    android:id="@id/rightbx"
+                    android:layout_marginRight="0dp"
+                    android:baselineAligned="false"
+                    android:background="@drawable/greenbg"
+
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proxima"
+                        android:text="Speed"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/speed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proxima"
+                        android:text="00"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textFontWeight="700"
+                        android:textSize="34sp" />
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proxima"
+                        android:text="Km/H"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="20dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/proxima"
-                    android:text="41 ltrs"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
+                    android:background="@drawable/shadowbg"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/proxima"
+                            android:text="Front Left Door"
+                            android:textColor="#000000"
+                            android:textFontWeight="400" />
+
+                        <TextView
+                            android:id="@+id/textView17"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/proxima"
+                            android:text="Open"
+                            android:textColor="#01702d"
+                            android:textFontWeight="700" />
+
+                        <TextView
+                            android:id="@+id/textView14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/proxima"
+                            android:text="Rear Left Door"
+                            android:textColor="#000000"
+                            android:textFontWeight="400"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/textView16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:fontFamily="@font/proxima"
+                            android:text="Open"
+                            android:textColor="#01702d"
+                            android:textFontWeight="700" />
+
+                        <TextView
+                            android:id="@+id/textView15"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/proxima"
+                            android:text="Trunk Cover"
+                            android:textColor="#000000"
+                            android:textFontWeight="400"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/textView13"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/proxima"
+                            android:text="Closed"
+                            android:textColor="#000000"
+                            android:textFontWeight="700"
+
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".5"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/textView121"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/proxima"
+                            android:text="Front Right Door"
+                            android:textColor="#000000"
+                            android:textFontWeight="400" />
+
+                        <TextView
+                            android:id="@+id/textView171"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/proxima"
+                            android:text="Open"
+                            android:textColor="#01702d"
+                            android:textFontWeight="700" />
+
+                        <TextView
+                            android:id="@+id/textView141"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/proxima"
+                            android:text="Rear Right Door"
+                            android:textColor="#000000"
+                            android:textFontWeight="400"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/textView161"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:fontFamily="@font/proxima"
+                            android:text="Open"
+                            android:textColor="#01702d"
+                            android:textFontWeight="700" />
+
+                        <TextView
+                            android:id="@+id/textView151"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/proxima"
+                            android:text="Engine Cover"
+                            android:textColor="#000000"
+                            android:textFontWeight="400"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/textView131"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/proxima"
+                            android:text="Closed"
+                            android:textColor="#000000"
+                            android:textFontWeight="700"
+
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="right"
-                android:gravity="center"
-
-                android:id="@id/rightbx"
-                android:layout_marginRight="0dp"
-                android:baselineAligned="false"
-                android:background="@drawable/greenbg"
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proxima"
-                    android:text="Speed"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
-
-                <TextView
-                    android:id="@+id/speed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proxima"
-                    android:text="82"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF"
-                    android:textFontWeight="700"
-                    android:textSize="34sp" />
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proxima"
-                    android:text="Km/H"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
-
-            </LinearLayout>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shadowbg"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView12"
-                        android:layout_width="match_parent"
+                        android:id="@+id/textView26"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/proxima"
-                        android:text="Front Left Door"
-                        android:textColor="#000000"
-                        android:textFontWeight="400" />
-
-                    <TextView
-                        android:id="@+id/textView17"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/proxima"
-                        android:text="Open"
-                        android:textColor="#01702d"
-                        android:textFontWeight="700" />
-
-                    <TextView
-                        android:id="@+id/textView14"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/proxima"
-                        android:text="Rear Left Door"
-                        android:textColor="#000000"
-                        android:textFontWeight="400"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/textView16"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:fontFamily="@font/proxima"
-                        android:text="Open"
-                        android:textColor="#01702d"
-                        android:textFontWeight="700" />
-
-                    <TextView
-                        android:id="@+id/textView15"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/proxima"
-                        android:text="Trunk Cover"
-                        android:textColor="#000000"
-                        android:textFontWeight="400"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/proxima"
-                        android:text="Closed"
-                        android:textColor="#000000"
+                        android:layout_weight="1"
                         android:textFontWeight="700"
+                        android:text="Odometer" />
 
-                        />
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textAlignment="viewEnd" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:id="@+id/textView121"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/proxima"
-                        android:text="Front Right Door"
-                        android:textColor="#000000"
-                        android:textFontWeight="400" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView171"
-                        android:layout_width="match_parent"
+                        android:id="@+id/enginetemp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/proxima"
-                        android:text="Open"
-                        android:textColor="#01702d"
-                        android:textFontWeight="700" />
-
-                    <TextView
-                        android:id="@+id/textView141"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/proxima"
-                        android:text="Rear Right Door"
-                        android:textColor="#000000"
-                        android:textFontWeight="400"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/textView161"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:fontFamily="@font/proxima"
-                        android:text="Open"
-                        android:textColor="#01702d"
-                        android:textFontWeight="700" />
-
-                    <TextView
-                        android:id="@+id/textView151"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/proxima"
-                        android:text="Engine Cover"
-                        android:textColor="#000000"
-                        android:textFontWeight="400"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/textView131"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/proxima"
-                        android:text="Closed"
-                        android:textColor="#000000"
+                        android:layout_weight="1"
                         android:textFontWeight="700"
+                        android:text="Battery Voltage" />
 
-                        />
-
+                    <TextView
+                        android:id="@+id/enginetempvalue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textAlignment="viewEnd" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/cnglevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textFontWeight="700"
+                        android:text="Altitude" />
+
+                    <TextView
+                        android:id="@+id/cnglevelvalue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textAlignment="viewEnd" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/totalfuel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textFontWeight="700"
+                        android:text="Engine Speed" />
+
+                    <TextView
+                        android:id="@+id/enginespeed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textAlignment="viewEnd" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/workingoncng"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textFontWeight="700"
+                        android:text="Coolant Temperature" />
+
+                    <TextView
+                        android:id="@+id/workingoncngvalue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textAlignment="viewEnd" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/accelerationpedal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textFontWeight="700"
+                        android:text="Engine Load" />
+
+                    <TextView
+                        android:id="@+id/engineload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textAlignment="viewEnd" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/oilpressure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textFontWeight="700"
+                        android:text="Throttle Position" />
+
+                    <TextView
+                        android:id="@+id/throttleposition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textAlignment="viewEnd" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/cngconsumption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textFontWeight="700"
+                        android:text="Engine Oil Temperature" />
+
+                    <TextView
+                        android:id="@+id/engoil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textAlignment="viewEnd" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/coolant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textFontWeight="700"
+                        android:text="Coolant Temperature" />
+
+                    <TextView
+                        android:id="@+id/coolanttemp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textAlignment="viewEnd" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/gsm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textFontWeight="700"
+                        android:text="GSM Signal Strength" />
+
+                    <TextView
+                        android:id="@+id/gsmstrength"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textAlignment="viewEnd" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/totalmileage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textFontWeight="700"
+                        android:text="" />
+
+                    <TextView
+                        android:id="@+id/totalmileagevalue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textAlignment="viewEnd" />
+                </LinearLayout>
+
+
+
             </LinearLayout>
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView26"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textFontWeight="700"
-                    android:text="Engine Speed" />
-
-                <TextView
-                    android:id="@+id/textView27"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="1000 RPM"
-                    android:textAlignment="viewEnd" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/enginetemp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textFontWeight="700"
-                    android:text="Engine Temperature" />
-
-                <TextView
-                    android:id="@+id/enginetempvalue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="1000 RPM"
-                    android:textAlignment="viewEnd" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/cnglevel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textFontWeight="700"
-                    android:text="CNG Level" />
-
-                <TextView
-                    android:id="@+id/cnglevelvalue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="5 KG"
-                    android:textAlignment="viewEnd" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/totalfuel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textFontWeight="700"
-                    android:text="Total Fuel Consumption" />
-
-                <TextView
-                    android:id="@+id/totalfuelvalue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="4 KG"
-                    android:textAlignment="viewEnd" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/workingoncng"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textFontWeight="700"
-                    android:text="Engine Working On CNG" />
-
-                <TextView
-                    android:id="@+id/workingoncngvalue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="NO"
-                    android:textAlignment="viewEnd" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/accelerationpedal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textFontWeight="700"
-                    android:text="Acceleration Pedal Position" />
-
-                <TextView
-                    android:id="@+id/accelerationpedalvalue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="20 %"
-                    android:textAlignment="viewEnd" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/oilpressure"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textFontWeight="700"
-                    android:text="Oil Pressure" />
-
-                <TextView
-                    android:id="@+id/oilpressurevalue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="10.02"
-                    android:textAlignment="viewEnd" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/cngconsumption"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textFontWeight="700"
-                    android:text="Total CNG Consumption" />
-
-                <TextView
-                    android:id="@+id/cngconsumptionvalue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="10.02 KG"
-                    android:textAlignment="viewEnd" />
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/totalmileage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textFontWeight="700"
-                    android:text="Total Mileage" />
-
-                <TextView
-                    android:id="@+id/totalmileagevalue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="10.02 Km/L"
-                    android:textAlignment="viewEnd" />
-            </LinearLayout>
-
 
 
         </LinearLayout>
-
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

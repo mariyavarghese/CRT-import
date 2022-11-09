@@ -1,6 +1,7 @@
 package com.example.crt.ui.gallery;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.crt.DetailActivity;
 import com.example.crt.R;
+import com.example.crt.UserLoginpage;
 import com.example.crt.databinding.FragmentGalleryBinding;
 import com.example.crt.singleToneClass;
 
@@ -25,6 +27,7 @@ public class GalleryFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         GalleryViewModel galleryViewModel =
                 new ViewModelProvider(this).get(GalleryViewModel.class);
         singleToneClass singleToneClass = com.example.crt.singleToneClass.getInstance();
@@ -36,14 +39,14 @@ public class GalleryFragment extends Fragment {
 
 
         parentLinearLayout=(LinearLayout) root.findViewById(R.id.alert_holder);
-for(int i=0;i<3;i++) {
-    LayoutInflater inflaters = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    final View rowView = inflater.inflate(R.layout.alert_box, null);
-    // Add the new row before the add field button.
-    parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
-}
+        for(int i=0;i<3;i++) {
+            LayoutInflater inflaters = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View rowView = inflater.inflate(R.layout.alert_box, null);
+            // Add the new row before the add field button.
+            parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
+        }
         //   final TextView textView = binding.textGallery;
-       // galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        // galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

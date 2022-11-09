@@ -7,4 +7,53 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#EC1D26</color>
+    <color name="colorAccent">#008644</color>
+    <color name="phone_tx">#ACD8E9</color>
+
+    <color name="textbox_background_color">#F8F8F8</color>
+    <!--    <color name="textbox_text_color">#A4A4A4</color>-->
+    <color name="page_background_color">#ffffff</color>
+    <color name="button_background_color">#EC1D26</color>
+    <color name="dark_grey_button_background_color">#212932</color>
+    <color name="grey_button_background_color">#EBEDE7</color>
+    <color name="blue_button_background_color">#348ABB</color>
+    <color name="header_text_color">#EC1D26</color>
+    <color name="other_text_color_light_grey">#C5C7CC</color>
+    <color name="other_text_color_dark_grey">#747474</color>
+    <color name="check_box_color">#3BD63F</color>
+
+    <color name="sky_blue">#0077B5</color>
+    <color name="home_icon_background">#F7F7F7</color>
+    <color name="light_grey">#E7E7E7</color>
+    <color name="light_blue">#00AED8</color>
+    <color name="dark_blue">#00008B</color>
+    <color name="blue">#0000FF</color>
+    <color name="bluee">#3369FF</color>
+    <color name="btn_black">#212932</color>
+    <color name="light_green">#3BD63F</color>
+    <color name="light_light_grey">#F2F2F2</color>
+    <color name="green">#469A7E</color>
+    <color name="ripple_green">#018543</color>
+
+    <color name="blueky">#4e3f9c</color>
+    <color name="bluey">#5f57c7</color>
+    <color name="text_color1">#16965C</color>
+    <color name="bluesky">#00568E</color>
+    <color name="text_color2">#FED91B</color>
+    <color name="text_color3">#5A708C</color>
+    <color name="text_color4">#3C7CA6</color>
+    <color name="text_color5">#5CB9F3</color>
+    <color name="text_color6">#F07C7F</color>
+    <color name="text_color7">#F8BF86</color>
+    <color name="text_color8">#EE6165</color>
+    <color name="text_color9">#FBBA76</color>
+    <color name="text_color10">#EC1D26</color>
+    <color name="text_color11">#B354D7</color>
+    <color name="text_color12">#EBF58C</color>
+    <color name="button_bg_red">#E85155</color>
+    <color name="notification_color">#F7665E</color>
+
 </resources>

@@ -10,12 +10,21 @@
 
             android:title="@string/menu_home" />
         <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_alertv"
+            android:title="Logout"
+
+            />
+        <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_alertv"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_gallery"
+            android:visible="true"/>
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_vector__link"
-            android:title="@string/menu_slideshow" />
+            android:title="@string/menu_slideshow"
+            android:visible="false"
+            />
     </group>
 </menu>

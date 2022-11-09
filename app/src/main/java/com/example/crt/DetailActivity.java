@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,8 +13,10 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,14 +62,15 @@ public class DetailActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityDetailBinding binding;
     private final static int CURRENT_PAGE= 1;
-   // private ConnectedThread maConnectedThread; // bluetooth background worker thread to send and receive data
-   private static final UUID BT_MODULE_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // "random" unique identifier
+    // private ConnectedThread maConnectedThread; // bluetooth background worker thread to send and receive data
+    private static final UUID BT_MODULE_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // "random" unique identifier
 
     private BluetoothAdapter mBTAdapter;
     private Handler mHandler; // Our main handler that will receive callback notifications
     private ConnectedThread mConnectedThread; // bluetooth background worker thread to send and receive data
     private BluetoothSocket mBTSocket = null; // bi-directional client-to-client data path
     private DBHandler dbHandler;
+    DataProcessor dataProcessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,7 @@ public class DetailActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.appBarDetail.toolbar);
         mBTAdapter = BluetoothAdapter.getDefaultAdapter(); // get a handle on the bluetooth radio
+        dataProcessor = new DataProcessor(getApplicationContext());
 
 
         binding.appBarDetail.fab.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +113,35 @@ public class DetailActivity extends AppCompatActivity {
         mHandler = new Handler(Looper.getMainLooper()){
             @Override
             public void handleMessage(Message msg){
+
+
+                String ignition ="";
+                String total_mileage= "0";
+                String vehicle_mileage= "0";
+                String total_fuel_consumption= "0";
+                String total_fuel_consumption_counted= "5";
+                String fuel_level_percent= "0";
+                String fuel_level_liters= "2";
+                String engine_speed_RPM= "0";
+                String engine_temperature= "37";
+                String vehicle_speed= "0";
+                String accelaration_pedal_position= "1";
+                String cng_level_percent= "20";
+                String total_cng_consumption= "56";
+                String engine_is_working_on_cng= "1";
+                String oil_pressure_level= "5";
+                String front_left_door= "1";
+                String front_right_door= "0";
+                String rear_right_door= "0";
+                String rear_left_door= "0";
+                String trunk_cover= "1";
+                String engine_cover_hood= "1";
+                String latitude= "6.7777766";
+                String longitude= "9.88888888";
+                String company_id= "3";
+                String user_id= "1";
+
+
                 if(msg.what == MESSAGE_READ) {
                     String readMessage = null;
                     try {
@@ -120,106 +154,241 @@ public class DetailActivity extends AppCompatActivity {
                     Log.d("frag",String.valueOf(singleToneClass.getFrag()));
 
                     if(singleToneClass.getFrag()==1) {
-                     String outhex = TextUtil.toHexString((byte[]) msg.obj);
-                     outhex = outhex.replaceAll("\\s", "");
-                     if (outhex.contains("C350")) {
-                         String ignition = outhex.substring(60, 64);
-                         ImageView igview = (ImageView) findViewById(R.id.ignition);
+                        String outhex = TextUtil.toHexString((byte[]) msg.obj);
+                        outhex = outhex.replaceAll("\\s", "");
+                        if (outhex.contains("C35000")) {
+                            int valpos= outhex.indexOf("C35000", 0);
+                            ignition = outhex.substring(valpos+6, valpos+8);
+
+                            ImageView igview = (ImageView) findViewById(R.id.ignition);
 
 
-                         if (ignition.equals("0000")) {
-                             Log.d("addtesigout", outhex);
-                             igview.setImageResource(R.drawable.ic_gcaronoff);
-                         } else {
-                             igview.setImageResource(R.drawable.ic_gcaron);
-                         }
+                            if (ignition.equals("00")) {
+                                Log.d("addtesigout", outhex);
+                                ignition= "0";
+                                igview.setImageResource(R.drawable.ic_gcaronoff);
+                                igview.setContentDescription("");
+                                singleToneClass.setIgnition("0");
+
+                            } else {
+                                igview.setImageResource(R.drawable.ic_gcaron);
+                                ignition ="1";
+                                singleToneClass.setIgnition("1");
+                            }
                     /*    Log.d("addtes", outhex.substring(170,174));
                         int decimal=Integer.parseInt(outhex.substring(170,174),16);
                         Log.d("addtesdes", String.valueOf(decimal));
 */
-                     }
+                        }
 
-                     if (outhex.contains("C3AA")) {
-                         final int min = 20;
-                         final int max = 80;
-                         final int random = new Random().nextInt((max - min) + 1) + min;
-                         String speed = outhex.substring(140, 144);
-                         Log.d("addtesig", speed);
-                         int decimal = Integer.parseInt(speed, 16);
-                         TextView speedview = (TextView) findViewById(R.id.speed);
-                         speedview.setText(String.valueOf(random));
+                        if (outhex.contains("9CEA")) {
+                            int valpos= outhex.indexOf("9CEA", 0);
+                            String speed = outhex.substring(valpos+6, valpos+10);
+                            Log.d("addtesig", "speed");
+                            int decimal = Integer.parseInt(speed, 16);
+                            TextView speedview = (TextView) findViewById(R.id.speed);
+                            speedview.setText(String.valueOf(decimal));
+                            singleToneClass.setSpeed(String.valueOf(decimal));
 
-                     }
-                 }
-                    {
-                  //       mConnectedThread.write(bytes);
+                        }
+
+                        if (outhex.contains("C36E")) {
+                            int valpos= outhex.indexOf("C36E", 0);
+                            String speed = outhex.substring(valpos+6, valpos+8);
+                            //  Log.d("Gsm", speed);
+                            int decimal = Integer.parseInt(speed, 16);
+                            TextView speedview = (TextView) findViewById(R.id.gsmstrength);
+                            String settext= String.valueOf(decimal) + "/ 5";
+                            speedview.setText(String.valueOf(settext) );
+                            singleToneClass.setGsmstrength(String.valueOf(decimal));
+
+                        }
+
+                        if (outhex.contains("C3A0")) {
+
+                            int valpos= outhex.indexOf("C3A0", 0);
+                            String speed = outhex.substring(valpos+6, valpos+10);
+                            Log.d("batvol", speed);
+                            int decimal = Integer.parseInt(speed, 16)/1000;
+                            TextView speedview = (TextView) findViewById(R.id.enginetempvalue);
+                            String setstring = String.valueOf(decimal);
+                            setstring = setstring + " V";
+                            speedview.setText(setstring);
+                            singleToneClass.setBattery(String.valueOf(decimal));
+
+                        }
+
+
+                        if (outhex.contains("9CE003")) {
+
+                            int valpos= outhex.indexOf("9CE003", 0);
+                            String speed = outhex.substring(valpos+6, valpos+10);
+
+                            int decimal = Integer.parseInt(speed, 16);
+                            TextView speedview = (TextView) findViewById(R.id.enginespeed);
+                            String setstring = String.valueOf(decimal);
+                            setstring = setstring + " RPM";
+                            speedview.setText(setstring);
+                            singleToneClass.setRpm(String.valueOf(decimal));
+
+                        }
+
+
+                        if (outhex.contains("9CB801")) {
+
+                            int valpos= outhex.indexOf("9CB801", 0);
+                            String speed = outhex.substring(valpos+6, valpos+8);
+
+                            int decimal = Integer.parseInt(speed, 16);
+                            TextView speedview = (TextView) findViewById(R.id.workingoncngvalue);
+                            String setstring = String.valueOf(decimal);
+                            setstring = setstring + " C";
+                            speedview.setText(setstring);
+                            singleToneClass.setEngine_coolant_temperature(String.valueOf(decimal));
+
+                        }
+
+                        if (outhex.contains("9CAE00")) {
+
+                            int valpos= outhex.indexOf("9CAE00", 0);
+                            String speed = outhex.substring(valpos+6, valpos+8);
+
+                            int decimal = Integer.parseInt(speed, 16);
+                            TextView speedview = (TextView) findViewById(R.id.engineload);
+                            String setstring = String.valueOf(decimal);
+                            setstring = setstring + " %";
+                            speedview.setText(setstring);
+                            singleToneClass.setEngineLoad(String.valueOf(decimal));
+
+                        }
+
+                        if (outhex.contains("9D1200")) {
+
+                            int valpos= outhex.indexOf("9D1200", 0);
+                            String speed = outhex.substring(valpos+6, valpos+8);
+
+                            int decimal = Integer.parseInt(speed, 16);
+                            TextView speedview = (TextView) findViewById(R.id.throttleposition);
+                            String setstring = String.valueOf(decimal);
+                            setstring = setstring + " %";
+                            speedview.setText(setstring);
+                            singleToneClass.setThrottle_position(String.valueOf(decimal));
+
+                        }
+
+                        if (outhex.contains("9DBC00")) {
+
+                            int valpos= outhex.indexOf("9DBC00", 0);
+                            String speed = outhex.substring(valpos+6, valpos+8);
+
+                            int decimal = Integer.parseInt(speed, 16);
+                            TextView speedview = (TextView) findViewById(R.id.engoil);
+                            String setstring = String.valueOf(decimal);
+                            setstring = setstring + " C";
+                            speedview.setText(setstring);
+                            singleToneClass.setEngine_oil_temperature(String.valueOf(decimal));
+
+                        }
+
+                        if (outhex.contains("9CB801")) {
+
+                            int valpos= outhex.indexOf("9CB801", 0);
+                            String speed = outhex.substring(valpos+6, valpos+8);
+
+                            //  int decimal = Integer.parseInt(speed, 16);
+                            short decimal = (short) Integer.parseInt(speed,16);
+                            TextView speedview = (TextView) findViewById(R.id.coolanttemp);
+                            String setstring = String.valueOf(decimal);
+                            setstring = setstring + " C";
+                            speedview.setText(setstring);
+                            singleToneClass.setEngine_coolant_temperature(String.valueOf(decimal));
+
+                        }
+
+
+
+
+                        if (outhex.contains("C3F0")) {
+
+                            int valpos= outhex.indexOf("C3F0", 0);
+                            String speed = outhex.substring(valpos+6, valpos+14);
+
+                            int decimal = Integer.parseInt(speed, 16);
+                            TextView speedview = (TextView) findViewById(R.id.textView27);
+                            String setstring = String.valueOf(decimal);
+                            int kms= decimal/1000;
+                            setstring = String.valueOf(kms) + " km";
+                            speedview.setText(setstring);
+                            singleToneClass.setOdometer(String.valueOf(kms));
+
+                        }
+
+                        if (outhex.contains("010B09")) {
+
+                            int valpos= outhex.indexOf("010B09", 0);
+                            String speed = outhex.substring(valpos+6, valpos+22);
+
+                            long longHex = parseUnsignedHex(speed);
+                            double d = Double.longBitsToDouble(longHex);
+                            System.out.println(d);
+
+                            Log.d("010B",speed);
+
+
+                            Log.d("double", String.valueOf(d));
+                            TextView speedview = (TextView) findViewById(R.id.cnglevelvalue);
+                            String setstring = String.valueOf(d);
+                            setstring = setstring + " m";
+                            speedview.setText(setstring);
+                            singleToneClass.setAltitude(String.valueOf(d));
+
+                        }
+
+                    }
+                    else  {
+                        //       mConnectedThread.write(bytes);
+                    }
+
+
+
+                    dbHandler.addNewData(singleToneClass.getIgnition(),
+                            singleToneClass.getRpm(),
+
+                            singleToneClass.getBattery(),
+                            singleToneClass.getAltitude(),
+                            singleToneClass.getEngine_temperature(),
+
+                            singleToneClass.getEngine_coolant_temperature(),
+                            singleToneClass.getEngine_oil_temperature(),
+                            singleToneClass.getEngineLoad(),
+                            singleToneClass.getSpeed(),
+                            singleToneClass.getPedal(),
+                            singleToneClass.getThrottle_position(),
+                            singleToneClass.getOdometer(),
+                            singleToneClass.getGsmstrength(),
+                            dataProcessor.getCompanyidno(Config.COMPANY_IDNO),
+                            dataProcessor.getUserId(Config.COMPANY_ID)
+
+
+//                            "4", //add the code to get company id (for mariya)
+//                            "25"        //add the code to get user id (for mariya)
+                    );
+
                 }
 
-                    String ignition= "0";
-                    String total_mileage= "40";
-                    String vehicle_mileage= "45";
-                    String total_fuel_consumption= "50";
-                    String total_fuel_consumption_counted= "25";
-                    String fuel_level_percent= "60";
-                    String fuel_level_liters= "12";
-                    String engine_speed_RPM= "800";
-                    String engine_temperature= "37";
-                    String vehicle_speed= "600";
-                    String accelaration_pedal_position= "1";
-                    String cng_level_percent= "20";
-                    String total_cng_consumption= "56";
-                    String engine_is_working_on_cng= "1";
-                    String oil_pressure_level= "5";
-                    String front_left_door= "1";
-                    String front_right_door= "0";
-                    String rear_right_door= "0";
-                    String rear_left_door= "0";
-                    String trunk_cover= "1";
-                    String engine_cover_hood= "1";
-                    String latitude= "6.7777766";
-                    String longitude= "9.88888888";
-                    String company_id= "3";
-                    String user_id= "1";
-
-        dbHandler.addNewData(ignition,
-                total_mileage,
-                vehicle_mileage,
-                total_fuel_consumption,
-                total_fuel_consumption_counted,
-                fuel_level_percent,
-                fuel_level_liters,
-                engine_speed_RPM,
-                engine_temperature,
-                vehicle_speed,
-                accelaration_pedal_position,
-                cng_level_percent,
-                total_cng_consumption,
-                engine_is_working_on_cng,
-                oil_pressure_level,
-                front_left_door,
-                front_right_door,
-                rear_right_door,
-                rear_left_door,
-                trunk_cover,
-                engine_cover_hood,
-                latitude,
-                longitude,
-                company_id,
-                user_id);
-
-                }
 
                 if(msg.what == CONNECTING_STATUS){
                     if(msg.arg1 == 1) {
                         // mBluetoothStatus.setText("Connected to Device: " + msg.obj);
                         Log.d("addcone","Connected to"+msg.obj);
-                  //      mConnectedThread.cancel();
-                   //     Intent intent = new Intent (BluetoothActivity.this, DetailActivity.class);
-                    //    startActivity(intent);
+                        //      mConnectedThread.cancel();
+                        //     Intent intent = new Intent (BluetoothActivity.this, DetailActivity.class);
+                        //    startActivity(intent);
 
-                       // Byte sendm= {70,77,66,88,-86,-86,-86,-86,0,34,0,2,0,0,-49,121,13,10};
+                        // Byte sendm= {70,77,66,88,-86,-86,-86,-86,0,34,0,2,0,0,-49,121,13,10};
                         byte[] bytes ={70,77,66,88,-86,-86,-86,-86,0,34,0,2,0,0,-49,121,13,10};
-                            mConnectedThread.write(bytes);
+                        mConnectedThread.write(bytes);
+
 
 /*
                             while(true){
@@ -292,16 +461,22 @@ public class DetailActivity extends AppCompatActivity {
 
         bhandler.postDelayed(new Runnable() {
             public void run() {
-                System.out.println("myHandler: here!"); // Do your work here
-                byte[] bytes ={70,77,66,88,-86,-86,-86,-86,0,34,0,2,0,0,-49,121,13,10};
+                System.out.println("myHandler: here!");
+                byte[] bytes ={70,77,66,88,-86,-86,-86,-86,0,34,0,2,0,0,-49,121,13,10}; // for simple IO
                 mConnectedThread.write(bytes);
+
+                byte[] gnss ={70,77,66,88,-86,-86,-86,-86,0,30,0,2,0,0,-54,41,13,10}; //for gnss
+                mConnectedThread.write(gnss);
+
+                byte[] obd ={70,77,66,88,-86,-86,-86,-86,0,36,0,2,0,0,-49,-15,13,10};
+                mConnectedThread.write(obd);
 
                 bhandler.postDelayed(this, delay);
             }
         }, delay);
 
         final Handler apihandler = new Handler();
-        final int apidelay = 5000; // 1000 milliseconds == 1 second
+        final int apidelay = 300000; // 1000 milliseconds == 1 second
 
         apihandler.postDelayed(new Runnable() {
             public void run() {
@@ -316,7 +491,7 @@ public class DetailActivity extends AppCompatActivity {
                 bhandler.postDelayed(this, apidelay);
             }
         }, delay);
-    //    maConnectedThread.write("[B@857ca29");
+        //    maConnectedThread.write("[B@857ca29");
 
 
     }
@@ -326,6 +501,33 @@ public class DetailActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.detail, menu);
         return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+
+        if (id == R.id.logitout) {
+            try {
+                mBTSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent(this,UserLoginpage.class);
+            startActivity(intent);
+            return true;
+        }
+
+
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -344,144 +546,71 @@ public class DetailActivity extends AppCompatActivity {
         }
         return  device.createRfcommSocketToServiceRecord(BT_MODULE_UUID);
     }
-/*
 
-    private void postDataUsingVolley(String name, String job) {
-        // url to post our data
-        String url = "https://reqres.in/api/users";
+    public static long parseUnsignedHex(String text) {
+        if (text.length() == 16) {
+            return (parseUnsignedHex(text.substring(0, 1)) << 60)
+                    | parseUnsignedHex(text.substring(1));
+        }
+        return Long.parseLong(text, 16);
+    }
 
-        // creating a new variable for our request queue
-        RequestQueue queue = Volley.newRequestQueue(DetailActivity.this);
+    public void postData() throws JSONException {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        Cursor rcursor= dbHandler.getdata();
+        rcursor.moveToFirst();
+        // String sendata= "{\"vehicle_details\":[{\"ignition\":\""+ rcursor.getString(1)+"\",\"total_mileage\":\"40\",\"vehicle_mileage\":\"20\",\"total_fuel_consumption\":\"5\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\""+rcursor.getString(8)+"\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"4\",\"user_id\":\"2\"}] }";
+        String sendata= "{\n" +
+                "\"vehicle_details\": [\n" +
+                "    {\n" +
+                "      \"ignition\": \""+rcursor.getString(1)+"\",\n" +
+                "      \"altitude\":\""+rcursor.getString(4)+"\",\n" +
+                "      \"battery_voltage\":\""+rcursor.getString(3)+"\",\n" +
+                "      \"engine_speed\":\""+rcursor.getString(2)+"\",\n" +
+                "      \"enginecoolant_temperature\":\""+rcursor.getString(6)+"\",\n" +
+                "      \"engineload\":\""+rcursor.getString(8)+"\",\n" +
+                "      \"coolant_temperature\":\""+rcursor.getString(6)+"\",\n" +
+                "      \"throttleposition\":\""+rcursor.getString(11)+"\",\n" +
+                "      \"GSM_signal_strength\":\""+rcursor.getString(13)+"\",\n" +
+                "      \"engineoil_temperature\":\""+rcursor.getString(7)+"\",\n" +
+                "      \"odometer\":\""+rcursor.getString(12)+"\",\n" +
+                "      \"speed\":\""+rcursor.getString(9)+"\",\n" +
+                "      \"acceleration_pedal_position\":\""+rcursor.getString(10)+"\",\n" +
+                "       \"company_id\":\""+rcursor.getString(14)+"\",\n" +
+                "      \"user_id\":\""+rcursor.getString(16)+"\",\n" +
+                "      \"reading_time\":\""+rcursor.getString(15)+"\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+        //   JSONObject object = new JSONObject("{\"vehicle_details\":[{\"ignition\":\"0\",\"total_mileage\":\"40\",\"vehicle_mileage\":\"20\",\"total_fuel_consumption\":\"5\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"4\",\"user_id\":\"2\"}] }");
+        JSONObject object = new JSONObject(sendata);
+        //   object="[{\"ignition\":\"0\",\"total_mileage\":\"40\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"3\",\"user_id\":\"1\"},{\"ignition\":\"1\",\"total_mileage\":\"30\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"3\",\"user_id\":\"1\"}]"
+        //input your API parameters
+        //   object.put("parameter","value");
+        // object.put("parameter","value");
 
-        // on below line we are calling a string
-        // request method to post the data to our API
-        // in this we are calling a post method.
-        StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String apiresponse) {
-              Log.d("apiresoinded",apiresponse);
-                // on below line we are displaying a success toast message.
-                Toast.makeText(DetailActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
-                try {
-                    // on below line we are parsing the response
-                    // to json object to extract data from it.
-                    JSONObject respObj = new JSONObject(apiresponse);
+        Log.d("postreq", String.valueOf(object));
+        // Enter the correct url for your api service site
+        String url = Config.BASE_URL + "get_data.php?p=1";
+        Log.e("urlbase", url);
+//        String url = "https://ogesinfotech.com/crt_app/get_data.php?p=1"; //add code to get post api for mariya
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+                        System.out.println("response");
 
-                    // below are the strings which we
-                    // extract from our json object.
-                    Log.d("apirses", String.valueOf(respObj));
-                    // on below line we are setting this string s to our text view.
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
+                        //       resultTextView.setText("String Response : "+ response.toString());
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                Toast.makeText(DetailActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                //     resultTextView.setText("Error getting response");
             }
-        }) {
-            @Override
-            protected JSONObject getParams() {
-                // below line we are creating a map for
-                // storing our values in key and value pair.
-                Map<String, String> params = new HashMap<String, String>();
-
-                // on below line we are passing our key
-                // and value pair to our parameters.
-                params.put("vehicle_details", "[{\"ignition\":\"0\",\"total_mileage\":\"40\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"3\",\"user_id\":\"1\"},{\"ignition\":\"1\",\"total_mileage\":\"30\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"3\",\"user_id\":\"1\"}] ");
-                String str = "[{\"No\":\"17\",\"Name\":\"Andrew\"},{\"No\":\"18\",\"Name\":\"Peter\"}, {\"No\":\"19\",\"Name\":\"Tom\"}]";
-                try {
-                    JSONArray parray = new JSONArray(str);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                // at last we are
-                // returning our params.
-                System.out.println(params);
-              //  return params;
-                JSONObject student1 = new JSONObject();
-                try {
-                    student1.put("id", "3");
-                    student1.put("name", "NAME OF STUDENT");
-                    student1.put("year", "3rd");
-                    student1.put("curriculum", "Arts");
-                    student1.put("birthday", "5/5/1993");
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                JSONObject student2 = new JSONObject();
-                try {
-                    student2.put("id", "2");
-                    student2.put("name", "NAME OF STUDENT2");
-                    student2.put("year", "4rd");
-                    student2.put("curriculum", "scicence");
-                    student2.put("birthday", "5/5/1993");
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-
-                JSONArray jsonArray = new JSONArray();
-
-                jsonArray.put(student1);
-                jsonArray.put(student2);
-
-                JSONObject studentsObj = new JSONObject();
-                try {
-                    studentsObj.put("Students", jsonArray);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                String jsonStr = studentsObj.toString();
-
-                System.out.println("jsonString: "+jsonStr);
-                return studentsObj;
-            }
-        };
-        // below line is to make
-        // a json object request.
-        queue.add(request);
+        });
+        requestQueue.add(jsonObjectRequest);
     }
-*/
-public void postData() throws JSONException {
-    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-    dbHandler.getdata();
-    JSONObject object = new JSONObject("{\"vehicle_details\":[{\"ignition\":\"0\",\"total_mileage\":\"40\",\"vehicle_mileage\":\"20\",\"total_fuel_consumption\":\"5\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"4\",\"user_id\":\"2\"},{\"ignition\":\"1\",\"total_mileage\":\"30\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"4\",\"user_id\":\"1\"}] }");
- //   object="[{\"ignition\":\"0\",\"total_mileage\":\"40\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"3\",\"user_id\":\"1\"},{\"ignition\":\"1\",\"total_mileage\":\"30\",\"vehicle_mileage\":\"45\",\"total_fuel_consumption\":\"50\",\"total_fuel_consumption_counted\":\"25\",\"fuel_level_percent\":\"60\",\"fuel_level_liters\":\"12\",\"engine_speed_RPM\":\"800\",\"engine_temperature\":\"37\",\"vehicle_speed\":\"600\",\"accelaration_pedal_position\":\"1\",\"cng_level_percent\":\"20\",\"total_cng_consumption\":\"56\",\"engine_is_working_on_cng\":\"1\",\"oil_pressure_level\":\"5\",\"front_left_door\":\"1\",\"front_right_door\":\"0\",\"rear_right_door\":\"0\",\"rear_left_door\":\"0\",\"trunk_cover\":\"1\",\"engine_cover_hood\":\"1\",\"latitude\":\"6.7777766\",\"longitude\":\"9.88888888\",\"company_id\":\"3\",\"user_id\":\"1\"}]"
-    //input your API parameters
-    //   object.put("parameter","value");
-    // object.put("parameter","value");
-
-    Log.d("postreq", String.valueOf(object));
-    // Enter the correct url for your api service site
-    String url = "https://ogesinfotech.com/crt_app/get_data.php?p=1";
-    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, object,
-            new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    System.out.println(response);
-                    System.out.println("response");
-
-                    //       resultTextView.setText("String Response : "+ response.toString());
-                }
-            }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-       //     resultTextView.setText("Error getting response");
-        }
-    });
-    requestQueue.add(jsonObjectRequest);
-}
 
 
 }
